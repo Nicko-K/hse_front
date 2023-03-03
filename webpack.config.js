@@ -47,9 +47,7 @@ module.exports = (env) => {
                 {
                     test: /\.scss$/i,
                     use: [
-                        {
-                            loader: 'style-loader',
-                        },
+                        MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader',
                             options: {
@@ -92,14 +90,14 @@ module.exports = (env) => {
         },
         plugins: [
             new webpack.ProgressPlugin(),
-            new MiniCssExtractPlugin({
-                filename: 'css/[name].min.css',
-            }),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, './public/index.html'),
                 favicon: path.resolve(__dirname, './public/favicon.ico'),
                 chunks: ['env', 'main'],
                 chunksSortMode: 'manual',
+            }),
+            new MiniCssExtractPlugin({
+                filename: 'css/[name].min.css',
             }),
             new webpack.ProvidePlugin({
                 React: 'react',

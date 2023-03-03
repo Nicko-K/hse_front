@@ -7,7 +7,7 @@ export const TaskList = () => {
     const tasks = useSelector(selectTasks);
 
     return (
-        <div className={styles.wrapper}>
+        <main className={styles.wrapper}>
             {tasks.map((item) => {
                 return (
                     <TaskListItem key={item.id} data={item}/>
@@ -16,6 +16,6 @@ export const TaskList = () => {
             {tasks.length === 0 && (
                 <div className={styles.emptyList}>No tasks yet</div>
             )}
-        </div>
+        </main>
     );
 };

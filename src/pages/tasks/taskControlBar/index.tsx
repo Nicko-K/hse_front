@@ -18,8 +18,8 @@ export const TaskControlBar = () => {
     }, [dispatch]);
 
     return (
-        <div className={styles.wrapper}>
+        <footer className={styles.wrapper}>
             <Button onClick={handleNewTask}>Новая задача</Button>
-        </div>
+        </footer>
     );
 };

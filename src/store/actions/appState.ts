@@ -37,3 +37,15 @@ export const fetchUpdateTask = createAsyncThunk(
         thunkAPI.dispatch(setTaskDetail(null));
     }
 );
+
+export const fetchDeleteTask = createAsyncThunk(
+    '@tasks/delete',
+    async (data: ITask, thunkAPI) => {
+        const response = await tasksService.deleteTask(data);
+        if (!response) {
+            return;
+        }
+        thunkAPI.dispatch(fetchTasks());
+        thunkAPI.dispatch(setTaskDetail(null));
+    }
+);

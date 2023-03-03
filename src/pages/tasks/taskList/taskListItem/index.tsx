@@ -6,6 +6,7 @@ import { AppDispatch } from '../../../../store';
 import { setTaskDetail } from '../../../../store/slices/appState';
 import cx from 'classnames';
 import styles from './styles.module.scss';
+import { fetchDeleteTask } from '../../../../store/actions/appState';
 
 interface ITaskListItemProps {
     data: ITask
@@ -18,6 +19,10 @@ export const TaskListItem = ({
 
     const handleEditTask = () => {
         dispatch(setTaskDetail(data));
+    };
+
+    const handleDeleteTask = () => {
+        dispatch(fetchDeleteTask(data));
     };
 
     return (
@@ -35,6 +40,7 @@ export const TaskListItem = ({
                 </Button>
                 <Button
                     variant={EButtonVariant.ICON_BLACK}
+                    onClick={handleDeleteTask}
                     className={styles.icon}>
                     <DeleteIcon />
                 </Button>

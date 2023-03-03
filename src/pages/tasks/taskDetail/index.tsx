@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, EButtonVariant } from '../../../components/button';
 import { CheckBox } from '../../../components/checkbox';
+import { RadioButton } from '../../../components/radiobutton';
 import { ITask } from '../../../models/tasks';
 import { AppDispatch } from '../../../store';
 import { fetchCreateTask, fetchUpdateTask } from '../../../store/actions/appState';
@@ -56,7 +57,7 @@ export const TaskDetail = () => {
     return (
         <div className={styles.wrapper} onMouseDown={handleCloseTaskDetail}>
             <div className={styles.modal} onMouseDown={handleStopPropagation}>
-                <p className={styles.title}>Создать задачу</p>
+                <p className={styles.title}>{`${!data.id ? 'Создать' : 'Редактировать'} задачу`}</p>
                 <label
                     htmlFor={ID_NAME_INPUT}
                     className={styles.label}>

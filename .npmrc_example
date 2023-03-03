@@ -1,6 +1,0 @@
-save-exact=true
-
-//sberosc.sigma.sbrf.ru/repo/npm/:_authToken=/* your auth token from osc"
-registry=http://sberosc.sigma.sbrf.ru/repo/npm/
-audit=false
-always-auth=true
