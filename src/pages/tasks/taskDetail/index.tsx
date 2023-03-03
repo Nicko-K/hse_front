@@ -8,7 +8,7 @@ import { AppDispatch } from '../../../store';
 import { fetchCreateTask, fetchUpdateTask } from '../../../store/actions/appState';
 import { selectTaskDetail } from '../../../store/selectors/appState';
 import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName } from '../../../store/slices/appState';
-import { ID_DESC_INPUT, ID_NAME_INPUT } from '../../../utils/constans';
+import { ID_DESC_INPUT, ID_NAME_INPUT } from '../../../utils/constants';
 import styles from './styles.module.scss';
 
 export const TaskDetail = () => {
