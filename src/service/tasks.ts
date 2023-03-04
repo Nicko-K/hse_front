@@ -17,12 +17,14 @@ export const tasksService = {
         }
         return null;
     },
+    // TODO: extract serialization logic
     createTask: async (data: ITask) => {
         const apiInstance = getApiInstance();
         const response: AxiosResponse<ITaskRaw> = await apiInstance.post(ETasksEndpoints.TASKS, {
             name: data.name,
             description: data.description,
             is_done: data.isDone,
+            priority: data.priority,
         });
         if (response.status === statuses.CREATED) {
             return tasksModel.fromApiDetail(response.data);
@@ -35,6 +37,7 @@ export const tasksService = {
             name: data.name,
             description: data.description,
             is_done: data.isDone,
+            priority: data.priority,
         });
         if (response.status === statuses.OK) {
             return tasksModel.fromApiDetail(response.data);

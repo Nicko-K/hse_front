@@ -4,7 +4,14 @@ import styles from './styles.module.scss';
 import { TaskListItem } from './taskListItem';
 
 export const TaskList = () => {
-    const tasks = useSelector(selectTasks);
+    // idk if selectTasks will copy the array or return a reference 
+    // so, since I don't want to mutate it I will make a copy myself
+    const tasks = [...useSelector(selectTasks)];
+    
+    // sort by priority in descending order
+    tasks.sort((a, b) => {
+        return b.priority - a.priority;
+    });
 
     return (
         <main className={styles.wrapper}>

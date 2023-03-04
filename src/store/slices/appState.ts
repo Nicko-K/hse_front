@@ -57,7 +57,12 @@ const appStateSlice = createSlice({
                 return;
             }
             state.taskDetail.isDone = action.payload;
-        }
+        },
+        setTaskPriority: (state, action: PayloadAction<number>) => {
+            if (!state.taskDetail) return;
+
+            state.taskDetail.priority = action.payload;
+        },
     },
 });
 
@@ -70,9 +75,8 @@ export const {
     setTaskName,
     setTaskDesc,
     setTaskIsDone,
+    setTaskPriority,
     updateTask,
 } = appStateSlice.actions;
 
 export default appStateSlice.reducer;
-
-

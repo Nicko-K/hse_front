@@ -14,6 +14,7 @@ class Task(BaseModel):
     name: str
     description: str
     is_done: bool
+    priority: int
 
 
 app = FastAPI()
@@ -35,7 +36,7 @@ async def tasks():
     
 @app.post("/api/tasks", status_code=HTTPStatus.CREATED)
 async def create_task(task: Task):
-    # bad practice but don't care
+    # maybe it's bad practice to have global variables, but I kinda don't care
     global task_count
     created_task = task.copy(update={"id": task_count})
     task_count += 1
