@@ -32,17 +32,17 @@ def index():
 @app.get("/api/tasks")
 async def tasks():
     return list(db.values())
-    
-    
+
+
 @app.post("/api/tasks", status_code=HTTPStatus.CREATED)
 async def create_task(task: Task):
     # maybe it's bad practice to have global variables, but I kinda don't care
     global task_count
     created_task = task.copy(update={"id": task_count})
     task_count += 1
-    
-    db[created_task.id] = created_task # type: ignore
-    
+
+    db[created_task.id] = created_task  # type: ignore
+
     return created_task
 
 
@@ -50,7 +50,7 @@ async def create_task(task: Task):
 async def update_task(id_: int, new_task: Task):
     updated_task = new_task.copy(update={"id": id_})
     db[id_] = updated_task
-    
+
     return updated_task
 
 

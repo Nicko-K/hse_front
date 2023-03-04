@@ -3,12 +3,14 @@ import { ITask } from '../../models/tasks';
 
 interface IState {
     isLoading: boolean
+    isError: boolean
     tasks: ITask[]
     taskDetail: null | ITask
 }
 
 const initialState: IState = {
     isLoading: false,
+    isError: false,
     tasks: [],
     taskDetail: null,
 };
@@ -63,6 +65,14 @@ const appStateSlice = createSlice({
 
             state.taskDetail.priority = action.payload;
         },
+        setIsError: (state, action: PayloadAction<boolean>) => {
+            // close task detail if it's opened and it errored
+            if (state.taskDetail && action.payload) {
+                state.taskDetail = null;
+            }
+            
+            state.isError = action.payload;
+        },
     },
 });
 
@@ -77,6 +87,7 @@ export const {
     setTaskIsDone,
     setTaskPriority,
     updateTask,
+    setIsError,
 } = appStateSlice.actions;
 
 export default appStateSlice.reducer;

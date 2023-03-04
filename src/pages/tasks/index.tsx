@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { fetchTasks } from '../../store/actions/appState';
 import styles from './styles.module.scss';
+import { ErrorPopup } from '../error';
 
 export const TasksPage = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -22,6 +23,7 @@ export const TasksPage = () => {
                 <TaskList />
                 <TaskControlBar />
                 <TaskDetail />
+                <ErrorPopup />
             </div>
         </div>
     );

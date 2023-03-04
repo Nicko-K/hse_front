@@ -1,13 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ITask } from '../../models/tasks';
 import { tasksService } from '../../service/tasks';
-import { addTask, setTaskDetail, setTasks, updateTask } from '../slices/appState';
+import { addTask, setIsError, setTaskDetail, setTasks, updateTask } from '../slices/appState';
 
 export const fetchCreateTask = createAsyncThunk(
     '@tasks/create',
     async (data: ITask, thunkAPI) => {
         const response = await tasksService.createTask(data);
         if (!response) {
+            thunkAPI.dispatch(setIsError(true));
             return;
         }
         thunkAPI.dispatch(addTask(response));
@@ -20,6 +21,7 @@ export const fetchTasks = createAsyncThunk(
     async (_, thunkAPI) => {
         const response = await tasksService.getTasks();
         if (!response) {
+            thunkAPI.dispatch(setIsError(true));
             return;
         }
         thunkAPI.dispatch(setTasks(response));
@@ -31,6 +33,7 @@ export const fetchUpdateTask = createAsyncThunk(
     async (data: ITask, thunkAPI) => {
         const response = await tasksService.updateTask(data);
         if (!response) {
+            thunkAPI.dispatch(setIsError(true));
             return;
         }
         thunkAPI.dispatch(updateTask(response));
@@ -43,6 +46,7 @@ export const fetchDeleteTask = createAsyncThunk(
     async (data: ITask, thunkAPI) => {
         const response = await tasksService.deleteTask(data);
         if (!response) {
+            thunkAPI.dispatch(setIsError(true));
             return;
         }
         thunkAPI.dispatch(fetchTasks());

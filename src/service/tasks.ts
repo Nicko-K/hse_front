@@ -1,7 +1,10 @@
 import { getApiInstance } from './apiInstance';
-import { AxiosResponse } from 'axios';
+import { Axios, AxiosError, AxiosResponse } from 'axios';
 import { ITask, ITaskRaw, tasksModel } from '../models/tasks';
 import statuses from 'http-status-codes';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store';
+import { setIsError } from '../store/slices/appState';
 
 enum ETasksEndpoints {
     TASKS = '/tasks/',
@@ -11,7 +14,16 @@ enum ETasksEndpoints {
 export const tasksService = {
     getTasks: async () => {
         const apiInstance = getApiInstance();
-        const response: AxiosResponse<ITaskRaw[]> = await apiInstance.get(ETasksEndpoints.TASKS);
+        // sometimes response doesn't come back so we need to catch that
+        // (why the hell doesn't it just return a response with an error status or something?)
+        let response: AxiosResponse<ITaskRaw[]>;
+
+        try {
+            response = await apiInstance.get(ETasksEndpoints.TASKS);
+        } catch (e) {
+            return null;
+        }
+
         if (response.status === statuses.OK) {
             return tasksModel.fromApi(response.data);
         }
@@ -19,10 +31,15 @@ export const tasksService = {
     },
     createTask: async (data: ITask) => {
         const apiInstance = getApiInstance();
-        const response: AxiosResponse<ITaskRaw> = await apiInstance.post(
-            ETasksEndpoints.TASKS,
-            tasksModel.toApiDetail(data)
-        );
+
+        let response: AxiosResponse<ITaskRaw>;
+
+        try {
+            response = await apiInstance.post(ETasksEndpoints.TASKS, tasksModel.toApiDetail(data));
+        } catch (e) {
+            return null;
+        }
+
         if (response.status === statuses.CREATED) {
             return tasksModel.fromApiDetail(response.data);
         }
@@ -30,10 +47,17 @@ export const tasksService = {
     },
     updateTask: async (data: ITask) => {
         const apiInstance = getApiInstance();
-        const response: AxiosResponse<ITaskRaw> = await apiInstance.put(
-            ETasksEndpoints.TASK.replace(':id', data.id as string),
-            tasksModel.toApiDetail(data)
-        );
+        let response: AxiosResponse<ITaskRaw>;
+
+        try {
+            response = await apiInstance.put(
+                ETasksEndpoints.TASK.replace(':id', data.id as string),
+                tasksModel.toApiDetail(data)
+            );
+        } catch (e) {
+            return null;
+        }
+
         if (response.status === statuses.OK) {
             return tasksModel.fromApiDetail(response.data);
         }
@@ -41,9 +65,16 @@ export const tasksService = {
     },
     deleteTask: async (data: ITask) => {
         const apiInstance = getApiInstance();
-        const response: AxiosResponse<null> = await apiInstance.delete(
-            ETasksEndpoints.TASK.replace(':id', data.id as string)
-        );
+        let response: AxiosResponse<null>;
+
+        try {
+            response = await apiInstance.delete(
+                ETasksEndpoints.TASK.replace(':id', data.id as string)
+            );
+        } catch (e) {
+            return null;
+        }
+
         if (response.status === statuses.NO_CONTENT) {
             return true;
         }
