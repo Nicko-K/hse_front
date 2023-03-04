@@ -1,5 +1,5 @@
 export interface ITaskRaw {
-    id: number
+    id: number | null
     name: string
     description: string
     is_done: boolean
@@ -7,7 +7,7 @@ export interface ITaskRaw {
 }
 
 export interface ITask {
-    id: string          // why string and not number?
+    id: string | null          // why string and not number?
     name: string
     description: string
     isDone: boolean
@@ -17,13 +17,7 @@ export interface ITask {
 export const tasksModel = {
     // Task array
     fromApi: (dataRaw: ITaskRaw[]): ITask[] => {
-        return dataRaw.map((item) => ({
-            id: String(item.id),
-            name: item.name,
-            description: item.description,
-            isDone: item.is_done,
-            priority: item.priority,
-        }));
+        return dataRaw.map((item) => tasksModel.fromApiDetail(item));
     },
     // Single Task
     fromApiDetail: (dataRaw: ITaskRaw): ITask => {
@@ -33,6 +27,15 @@ export const tasksModel = {
             description: dataRaw.description,
             isDone: dataRaw.is_done,
             priority: dataRaw.priority,
+        };
+    },
+    toApiDetail: (data: ITask): ITaskRaw => {
+        return {
+            id: data.id ? Number.parseInt(data.id) : null,
+            name: data.name,
+            description: data.description,
+            is_done: data.isDone,
+            priority: data.priority,
         };
     },
 };

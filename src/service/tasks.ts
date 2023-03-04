@@ -17,15 +17,12 @@ export const tasksService = {
         }
         return null;
     },
-    // TODO: extract serialization logic
     createTask: async (data: ITask) => {
         const apiInstance = getApiInstance();
-        const response: AxiosResponse<ITaskRaw> = await apiInstance.post(ETasksEndpoints.TASKS, {
-            name: data.name,
-            description: data.description,
-            is_done: data.isDone,
-            priority: data.priority,
-        });
+        const response: AxiosResponse<ITaskRaw> = await apiInstance.post(
+            ETasksEndpoints.TASKS,
+            tasksModel.toApiDetail(data)
+        );
         if (response.status === statuses.CREATED) {
             return tasksModel.fromApiDetail(response.data);
         }
@@ -33,12 +30,10 @@ export const tasksService = {
     },
     updateTask: async (data: ITask) => {
         const apiInstance = getApiInstance();
-        const response: AxiosResponse<ITaskRaw> = await apiInstance.put(ETasksEndpoints.TASK.replace(':id', data.id), {
-            name: data.name,
-            description: data.description,
-            is_done: data.isDone,
-            priority: data.priority,
-        });
+        const response: AxiosResponse<ITaskRaw> = await apiInstance.put(
+            ETasksEndpoints.TASK.replace(':id', data.id as string),
+            tasksModel.toApiDetail(data)
+        );
         if (response.status === statuses.OK) {
             return tasksModel.fromApiDetail(response.data);
         }
@@ -46,10 +41,12 @@ export const tasksService = {
     },
     deleteTask: async (data: ITask) => {
         const apiInstance = getApiInstance();
-        const response: AxiosResponse<null> = await apiInstance.delete(ETasksEndpoints.TASK.replace(':id', data.id));
+        const response: AxiosResponse<null> = await apiInstance.delete(
+            ETasksEndpoints.TASK.replace(':id', data.id as string)
+        );
         if (response.status === statuses.NO_CONTENT) {
             return true;
         }
         return false;
-    }
+    },
 };
