@@ -5,6 +5,5 @@ build
 .idea
 yarn-error.log
 .DS_Store*
-.*
-backend
-
+.vscode
+__pycache__
