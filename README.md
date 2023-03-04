@@ -7,8 +7,8 @@ This is a little To-Do app for HSE workshop
 1. React 18.2.0
 2. Node 18.13.0
 3. Npm as package installer
+4. FastAPI for a mockup backend
 
 ### Scripts
 - npm install - script to install all the packages
 - npm run dev - script to run local server
-
