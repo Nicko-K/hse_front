@@ -59,7 +59,7 @@ const appStateSlice = createSlice({
             state.taskDetail.isDone = action.payload;
         },
         changeTaskPriority: (state, action: PayloadAction<string>) => {
-            state.taskDetail.priority = action.payload;
+            return;
         }
     },
 });

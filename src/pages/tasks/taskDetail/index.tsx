@@ -41,7 +41,7 @@ export const TaskDetail = () => {
     };
 
     const handleChangeDesc = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(changeTaskPriority(event.target.value));
+        dispatch(setTaskDesc(event.target.value));
     };
 
     const handleChangeIsDone = (event: React.ChangeEvent<HTMLInputElement>) => {
