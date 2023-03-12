@@ -7,9 +7,11 @@ import { ITask } from '../../../models/tasks';
 import { AppDispatch } from '../../../store';
 import { fetchCreateTask, fetchUpdateTask } from '../../../store/actions/appState';
 import { selectTaskDetail } from '../../../store/selectors/appState';
-import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName } from '../../../store/slices/appState';
+import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName, changeTaskPriority } from '../../../store/slices/appState';
 import { ID_DESC_INPUT, ID_NAME_INPUT } from '../../../utils/constans';
 import styles from './styles.module.scss';
+import { Simulate } from 'react-dom/test-utils';
+import change = Simulate.change;
 
 export const TaskDetail = () => {
     const data = useSelector(selectTaskDetail) as ITask | null;
@@ -39,7 +41,7 @@ export const TaskDetail = () => {
     };
 
     const handleChangeDesc = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(setTaskDesc(event.target.value));
+        dispatch(changeTaskPriority(event.target.value));
     };
 
     const handleChangeIsDone = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +50,9 @@ export const TaskDetail = () => {
         }
         dispatch(setTaskIsDone(event.target.checked));
     };
-
+    const handleChangePriority = (id: string) => {
+        dispatch(changeTaskPriority(id));
+    };
 
     if (!data) {
         return null;
@@ -77,6 +81,15 @@ export const TaskDetail = () => {
                     className={styles.desc}
                     value={data.description}
                     onChange={handleChangeDesc}/>
+                <RadioButton id={'highPriority'} checked={false} onChange={handleChangePriority}>
+                    Высокий приоритет
+                </RadioButton>
+                <RadioButton id={'mediumPriority'} checked={true} onChange={handleChangePriority}>
+                    Срединй приоритет
+                </RadioButton>
+                <RadioButton id={'lowPriority'} checked={false} onChange={handleChangePriority}>
+                    Низкий приоритет
+                </RadioButton>
                 <CheckBox
                     isDisabled={!data.id}
                     isChecked={data.isDone}

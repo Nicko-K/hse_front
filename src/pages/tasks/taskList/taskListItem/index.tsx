@@ -32,6 +32,7 @@ export const TaskListItem = ({
         })}>
             <div className={styles.header}>
                 <p className={styles.name}>{data.name}</p>
+                <p className={styles.name}>{data.priority}</p>
                 <Button
                     variant={EButtonVariant.ICON}
                     onClick={handleEditTask}
