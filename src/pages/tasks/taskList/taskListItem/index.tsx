@@ -31,7 +31,11 @@ export const TaskListItem = ({
             [styles.wrapper_isDone]: data.isDone
         })}>
             <div className={styles.header}>
-                <p className={styles.name}>{data.name}</p>
+                <p className={styles.name}>{data.name} /
+                    {data.priority === 'high' && ' Высокий приоритет'}
+                    {data.priority === 'midium' && ' Средний приоритет'}
+                    {data.priority === 'low' && ' Низкий приоритет'}
+                </p>
                 <Button
                     variant={EButtonVariant.ICON}
                     onClick={handleEditTask}

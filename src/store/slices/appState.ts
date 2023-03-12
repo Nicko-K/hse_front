@@ -52,6 +52,12 @@ const appStateSlice = createSlice({
             }
             state.taskDetail.description = action.payload;
         },
+        setTaskPriority: (state, action: PayloadAction<string>) => {
+            if (!state.taskDetail){
+                return;
+            }
+            state.taskDetail.priority = action.payload;
+        },
         setTaskIsDone: (state, action: PayloadAction<boolean>) => {
             if (!state.taskDetail) {
                 return;
@@ -69,6 +75,7 @@ export const {
     deleteTask,
     setTaskName,
     setTaskDesc,
+    setTaskPriority,
     setTaskIsDone,
     updateTask,
 } = appStateSlice.actions;
