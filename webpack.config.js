@@ -15,7 +15,7 @@ module.exports = (env) => {
             static: {
                 directory: path.resolve(__dirname, 'build'),
             },
-            port: 1234,
+            port: 1244,
             hot: true,
             historyApiFallback: true,
             compress: true,
@@ -24,7 +24,7 @@ module.exports = (env) => {
                 progress: true,
             },
             proxy: {
-                '/api': 'http://localhost:8000',
+                '/api': 'http://127.0.0.1:8000',
                 changeOrigin: true,
             },
         },
