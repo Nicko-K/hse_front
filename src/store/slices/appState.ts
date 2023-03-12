@@ -4,13 +4,15 @@ import { ITask } from '../../models/tasks';
 interface IState {
     isLoading: boolean
     tasks: ITask[]
-    taskDetail: null | ITask
+    taskDetail: ITask | null
+    priority: ITask['priority']
 }
 
 const initialState: IState = {
     isLoading: false,
     tasks: [],
     taskDetail: null,
+    priority: 2
 };
 
 const appStateSlice = createSlice({
@@ -57,7 +59,13 @@ const appStateSlice = createSlice({
                 return;
             }
             state.taskDetail.isDone = action.payload;
-        }
+        },
+        setTaskPriority: (state, action: PayloadAction<number>) => {
+            if (!state.taskDetail) {
+                return;
+            }
+            state.taskDetail.priority = action.payload;
+        },
     },
 });
 
@@ -65,6 +73,7 @@ export const {
     setTasks,
     setLoading,
     setTaskDetail,
+    setTaskPriority,
     addTask,
     deleteTask,
     setTaskName,

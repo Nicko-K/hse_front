@@ -1,4 +1,5 @@
 import React from 'react';
+//import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, EButtonVariant } from '../../../components/button';
 import { CheckBox } from '../../../components/checkbox';
@@ -7,14 +8,25 @@ import { ITask } from '../../../models/tasks';
 import { AppDispatch } from '../../../store';
 import { fetchCreateTask, fetchUpdateTask } from '../../../store/actions/appState';
 import { selectTaskDetail } from '../../../store/selectors/appState';
-import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName } from '../../../store/slices/appState';
+import { setTaskDesc, setTaskDetail, setTaskPriority, setTaskIsDone, setTaskName } from '../../../store/slices/appState';
 import { ID_DESC_INPUT, ID_NAME_INPUT } from '../../../utils/constans';
 import styles from './styles.module.scss';
+
+// const usePriority = (initialPriority: number, dispatch: AppDispatch) => {
+//     const [priority, setPriority] = useState(initialPriority);
+//     const handlePriorityChange = (value: number) => {
+//         setPriority(value);
+//         dispatch(setTaskPriority(value));
+// };
+// return [priority, handlePriorityChange] as const;
+// };
 
 export const TaskDetail = () => {
     const data = useSelector(selectTaskDetail) as ITask | null;
     const dispatch = useDispatch<AppDispatch>();
-
+    
+    //const [priority, handlePriorityChange] = usePriority(data?.priority || 2, dispatch);
+    
     const handleCloseTaskDetail = () => {
         dispatch(setTaskDetail(null));
     };
@@ -25,15 +37,18 @@ export const TaskDetail = () => {
 
     const onSave = async () => {
         if (!data) {
-            return;
+          return;
         }
+        const updatedTask = {
+          ...data,
+          //priority,
+        };
         if (!data.id) {
-            dispatch(fetchCreateTask(data));
+          dispatch(fetchCreateTask(updatedTask));
         } else {
-            dispatch(fetchUpdateTask(data));
+          dispatch(fetchUpdateTask(updatedTask));
         }
-    };
-
+      };
     const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setTaskName(event.target.value));
     };
@@ -48,7 +63,13 @@ export const TaskDetail = () => {
         }
         dispatch(setTaskIsDone(event.target.checked));
     };
-
+    const handleChangePriority = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (!data || !data.id) {
+            return;
+        }
+        dispatch(setTaskPriority(event.currentTarget.valueAsNumber));
+    };
+    
 
     if (!data) {
         return null;
@@ -77,6 +98,26 @@ export const TaskDetail = () => {
                     className={styles.desc}
                     value={data.description}
                     onChange={handleChangeDesc}/>
+                    <form>
+                    <RadioButton
+                        id = {1}
+                        value = {1}
+                        onChange = {handleChangePriority}>
+                        Высокий
+                    </RadioButton>
+                    <RadioButton
+                        id = {2}
+                        value= {2}
+                        onChange = {handleChangePriority}>
+                        Средний
+                    </RadioButton>
+                    <RadioButton
+                        id = {3}
+                        value= {3}
+                        onChange = {handleChangePriority}>
+                        Низкий
+                    </RadioButton>
+                    </form>
                 <CheckBox
                     isDisabled={!data.id}
                     isChecked={data.isDone}
