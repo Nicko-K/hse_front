@@ -1,3 +1,5 @@
+import * as string_decoder from 'string_decoder';
+
 export interface ITaskRaw {
     id: number
     name: string
@@ -14,6 +16,17 @@ export interface ITask {
     priority: string
 }
 
+function prioritySerialize(priority_raw: string){
+    switch (priority_raw){
+        case 'H':
+            return 'Высокий приоритет';
+        case 'L':
+            return 'Низкий приоритет';
+        default:
+            return 'Средний приоритет';
+    }
+}
+
 export const tasksModel = {
     fromApi: (dataRaw: ITaskRaw[]): ITask[] => {
         return dataRaw.map((item) => ({
@@ -21,7 +34,7 @@ export const tasksModel = {
             name: item.name,
             description: item.description,
             isDone: item.is_done,
-            priority: item.priority,
+            priority: prioritySerialize(item.priority),
         }));
     },
     fromApiDetail: (dataRaw: ITaskRaw): ITask => {
