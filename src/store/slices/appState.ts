@@ -62,18 +62,7 @@ const appStateSlice = createSlice({
             if (!state.taskDetail) {
                 return;
             }
-            if (action.payload == "low") {
-                state.taskDetail.priority = "low";
-                state.taskDetail.name += " / Низкий приоритет"
-            }
-            if (action.payload == "medium") {
-                state.taskDetail.priority = "medium";
-                state.taskDetail.name += " / Средний приоритет"
-            }
-            if (action.payload == "hight") {
-                state.taskDetail.priority = "hight";
-                state.taskDetail.name += " / Высокий приоритет"
-            }
+            state.taskDetail.priority = action.payload;
         },
     },
 });

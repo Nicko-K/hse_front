@@ -49,11 +49,25 @@ export const TaskDetail = () => {
         dispatch(setTaskIsDone(event.target.checked));
     };
 
-    const handleChangePriority = () => {
+    const handleChangePriorityLow = (id: "low") => {
         if (!data || !data.id) {
             return;
         }
-        dispatch(setTaskPriority(data.priority));
+        dispatch(setTaskPriority(id));
+    };
+
+    const handleChangePriorityMedium = (id: "medium") => {
+        if (!data || !data.id) {
+            return;
+        }
+        dispatch(setTaskPriority(id));
+    };
+
+    const handleChangePriorityHight = (id: "hight") => {
+        if (!data || !data.id) {
+            return;
+        }
+        dispatch(setTaskPriority(id));
     };
 
 
@@ -87,20 +101,20 @@ export const TaskDetail = () => {
                 <div className="RadioButtons">
                     <RadioButton
                         id={"hight"}
-                        checked={data.priority == "hight" ? true : false}
-                        onChange={handleChangePriority}>
+                        onChange={handleChangePriorityHight}
+                        checked={data.priority == "hight" ? true : false}>
                             Высокий
                     </RadioButton>
                     <RadioButton
                         id={"medium"}
-                        checked={data.priority == "medium" ? true : false}
-                        onChange={handleChangePriority}>
+                        onChange={handleChangePriorityMedium}
+                        checked={data.priority == "medium" ? true : false}>
                             Средний
                     </RadioButton>
                     <RadioButton
                         id={"low"}
-                        checked={data.priority == "low" ? true : false}
-                        onChange={handleChangePriority}>
+                        onChange={handleChangePriorityLow}
+                        checked={data.priority == "low" ? true : false}>
                             Никзкий
                     </RadioButton>
                 </div>
