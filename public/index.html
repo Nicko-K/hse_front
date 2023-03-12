@@ -1,3 +1,4 @@
+import React from 'react'
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,3 +11,25 @@
         <div id="root"></div>
     </body>
 </html>
+
+<div>
+  <label for="priority">Приоритет</label>
+  <select name="priority" id="priority">
+    <option value="low">Низкий</option>
+    <option value="medium">Средний</option>
+    <option value="high">Высокий</option>
+  </select>
+</div>
+
+
+function Task(props) {
+  return (
+    <div>
+      <h2>{props.title}</h2>
+      <p>{props.description}</p>
+      <p>Priority: {props.priority}</p> // новый элемент для отображения приоритета
+    </div>
+  );
+}
+
+export default Task;
