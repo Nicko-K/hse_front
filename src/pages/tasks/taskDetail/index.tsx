@@ -12,21 +12,10 @@ import { setTaskDesc, setTaskDetail, setTaskPriority, setTaskIsDone, setTaskName
 import { ID_DESC_INPUT, ID_NAME_INPUT } from '../../../utils/constans';
 import styles from './styles.module.scss';
 
-// const usePriority = (initialPriority: number, dispatch: AppDispatch) => {
-//     const [priority, setPriority] = useState(initialPriority);
-//     const handlePriorityChange = (value: number) => {
-//         setPriority(value);
-//         dispatch(setTaskPriority(value));
-// };
-// return [priority, handlePriorityChange] as const;
-// };
-
 export const TaskDetail = () => {
     const data = useSelector(selectTaskDetail) as ITask | null;
     const dispatch = useDispatch<AppDispatch>();
-    
-    //const [priority, handlePriorityChange] = usePriority(data?.priority || 2, dispatch);
-    
+        
     const handleCloseTaskDetail = () => {
         dispatch(setTaskDetail(null));
     };
@@ -39,14 +28,10 @@ export const TaskDetail = () => {
         if (!data) {
           return;
         }
-        const updatedTask = {
-          ...data,
-          //priority,
-        };
         if (!data.id) {
-          dispatch(fetchCreateTask(updatedTask));
+          dispatch(fetchCreateTask(data));
         } else {
-          dispatch(fetchUpdateTask(updatedTask));
+          dispatch(fetchUpdateTask(data));
         }
       };
     const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,11 +48,8 @@ export const TaskDetail = () => {
         }
         dispatch(setTaskIsDone(event.target.checked));
     };
-    const handleChangePriority = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (!data || !data.id) {
-            return;
-        }
-        dispatch(setTaskPriority(event.currentTarget.valueAsNumber));
+    const handleChangePriority = (id: string) => {
+        dispatch(setTaskPriority(Number.parseInt(id)));
     };
     
 
@@ -100,20 +82,20 @@ export const TaskDetail = () => {
                     onChange={handleChangeDesc}/>
                     <form>
                     <RadioButton
-                        id = {1}
-                        value = {1}
+                        id = '1'
+                        checked = {data.priority === 1}
                         onChange = {handleChangePriority}>
                         Высокий
                     </RadioButton>
                     <RadioButton
-                        id = {2}
-                        value= {2}
+                        id = '2'
+                        checked= {data.priority === 2}
                         onChange = {handleChangePriority}>
                         Средний
                     </RadioButton>
                     <RadioButton
-                        id = {3}
-                        value= {3}
+                        id = '3'
+                        checked= {data.priority === 3}
                         onChange = {handleChangePriority}>
                         Низкий
                     </RadioButton>

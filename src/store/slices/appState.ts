@@ -12,7 +12,7 @@ const initialState: IState = {
     isLoading: false,
     tasks: [],
     taskDetail: null,
-    priority: 2
+    priority: 1 | 2 | 3
 };
 
 const appStateSlice = createSlice({

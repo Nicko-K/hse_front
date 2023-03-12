@@ -1,25 +1,21 @@
 import styles from './styles.module.scss';
 
 interface IOptionProps {
-    id: number
-    value: number,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    id: string
+    checked: boolean
+    onChange: (id: string) => void
 }
 
 export const RadioButton = ({
     id,
-    value,
+    checked,
     onChange,
     children,
 }: React.PropsWithChildren<IOptionProps>) => {
     return (
         <div className={styles.wrapper}>
-            <input
-            type='radio' 
-            checked={id === value} 
-            name='priority'
-            value={value} 
-            onChange={onChange}
+            <input type='radio' checked={checked} 
+            onChange={() => { onChange(id); }}
             />
             <label className={styles.label}>
                 {children}

@@ -1,5 +1,5 @@
 export interface ITaskRaw {
-    id: number
+    id: number 
     name: string
     description: string
     is_done: boolean
