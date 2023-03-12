@@ -7,7 +7,7 @@ import { ITask } from '../../../models/tasks';
 import { AppDispatch } from '../../../store';
 import { fetchCreateTask, fetchUpdateTask } from '../../../store/actions/appState';
 import { selectTaskDetail } from '../../../store/selectors/appState';
-import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName } from '../../../store/slices/appState';
+import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName, setTaskPriority } from '../../../store/slices/appState';
 import { ID_DESC_INPUT, ID_NAME_INPUT } from '../../../utils/constans';
 import styles from './styles.module.scss';
 
@@ -48,6 +48,10 @@ export const TaskDetail = () => {
         }
         dispatch(setTaskIsDone(event.target.checked));
     };
+    const handleChangePriority = (id: string) => {
+        dispatch(setTaskPriority(id));
+    };
+
 
 
     if (!data) {
@@ -77,6 +81,15 @@ export const TaskDetail = () => {
                     className={styles.desc}
                     value={data.description}
                     onChange={handleChangeDesc}/>
+                <RadioButton id={'Высокий'} checked={'Высокий' === data.priority} onChange={handleChangePriority}>
+                    Высокий
+                </RadioButton>
+                <RadioButton id={'Средний'} checked={'Средний' === data.priority} onChange={handleChangePriority}>
+                    Средний
+                </RadioButton>
+                <RadioButton id={'Низкий'} checked={'Низкий' === data.priority} onChange={handleChangePriority}>
+                    Низкий
+                </RadioButton>
                 <CheckBox
                     isDisabled={!data.id}
                     isChecked={data.isDone}
