@@ -24,6 +24,15 @@ export const TaskListItem = ({
     const handleDeleteTask = () => {
         dispatch(fetchDeleteTask(data));
     };
+    const handleDataPriority = (data: ITask) => {
+        if (data.priority === 1) {
+            return 'Высокий';
+        } else if (data.priority === 2) {
+            return 'Средний';
+        } else if (data.priority === 3) {
+            return 'Низкий';
+        }
+    };
 
     return (
         <div className={cx({
@@ -31,7 +40,7 @@ export const TaskListItem = ({
             [styles.wrapper_isDone]: data.isDone
         })}>
             <div className={styles.header}>
-                <p className={styles.name}>{data.name}</p>
+                <p className={styles.name}>{data.name} / {handleDataPriority(data)} приоритет</p>
                 <Button
                     variant={EButtonVariant.ICON}
                     onClick={handleEditTask}
