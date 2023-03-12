@@ -7,9 +7,11 @@ import { ITask } from '../../../models/tasks';
 import { AppDispatch } from '../../../store';
 import { fetchCreateTask, fetchUpdateTask } from '../../../store/actions/appState';
 import { selectTaskDetail } from '../../../store/selectors/appState';
-import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName } from '../../../store/slices/appState';
+import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName, setTaskPriority } from '../../../store/slices/appState';
 import { ID_DESC_INPUT, ID_NAME_INPUT } from '../../../utils/constans';
 import styles from './styles.module.scss';
+
+
 
 export const TaskDetail = () => {
     const data = useSelector(selectTaskDetail) as ITask | null;
@@ -36,6 +38,10 @@ export const TaskDetail = () => {
 
     const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setTaskName(event.target.value));
+    };
+
+    const handleRadioBtn = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setTaskPriority());
     };
 
     const handleChangeDesc = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -77,6 +83,24 @@ export const TaskDetail = () => {
                     className={styles.desc}
                     value={data.description}
                     onChange={handleChangeDesc}/>
+                <RadioButton
+                    isDisabled={!data.id}
+                    isChecked={data.isChecked}
+                    onChange={handleRadioBtn}>
+                    Срочно
+                </RadioButton>
+                <RadioButton
+                    isDisabled={!data.id}
+                    isChecked={data.isChecked}
+                    onChange={handleRadioBtn}>
+                    Еще терпит
+                </RadioButton>
+                <RadioButton
+                    isDisabled={!data.id}
+                    isChecked={data.isChecked}
+                    onChange={handleRadioBtn}>
+                    Пока забей
+                </RadioButton>
                 <CheckBox
                     isDisabled={!data.id}
                     isChecked={data.isDone}

@@ -5,6 +5,7 @@ interface IState {
     isLoading: boolean
     tasks: ITask[]
     taskDetail: null | ITask
+    ta
 }
 
 const initialState: IState = {
@@ -25,6 +26,9 @@ const appStateSlice = createSlice({
         },
         setTaskDetail: (state, action: PayloadAction<ITask | null>) => {
             state.taskDetail = action.payload;
+        },
+        setTaskPriority: (state, action: PayloadAction<number>) => {
+            state.TaskPriority = action.payload;
         },
         addTask: (state, action: PayloadAction<ITask>) => {
             state.tasks.push(action.payload);
@@ -70,6 +74,7 @@ export const {
     setTaskName,
     setTaskDesc,
     setTaskIsDone,
+    setTaskPriority,
     updateTask,
 } = appStateSlice.actions;
 
