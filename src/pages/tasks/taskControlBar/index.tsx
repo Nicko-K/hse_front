@@ -14,7 +14,7 @@ export const TaskControlBar = () => {
             name: '',
             description: '',
             isDone: false,
-            priority: 1,
+            priority: 3,
         }));
     }, [dispatch]);
 

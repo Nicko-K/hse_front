@@ -81,11 +81,6 @@ export const TaskDetail = () => {
                     className={styles.desc}
                     value={data.description}
                     onChange={handleChangeDesc}/>
-                <label
-                    htmlFor={ID_PRIORITY_INPUT}
-                    className={styles.label}>
-                    Приоритет
-                </label>
                 <RadioButton 
                     id="3" 
                     checked={data.priority === 3}
