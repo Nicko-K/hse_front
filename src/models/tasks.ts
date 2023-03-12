@@ -1,8 +1,11 @@
+import { isMap } from "lodash"
+
 export interface ITaskRaw {
     id: number
     name: string
     description: string
     is_done: boolean
+    priority: string
 }
 
 export interface ITask {
@@ -10,6 +13,7 @@ export interface ITask {
     name: string
     description: string
     isDone: boolean
+    priority: string
 }
 
 export const tasksModel = {
@@ -19,6 +23,7 @@ export const tasksModel = {
             name: item.name,
             description: item.description,
             isDone: item.is_done,
+            priority: item.priority,
         }));
     },
     fromApiDetail: (dataRaw: ITaskRaw): ITask => {
@@ -27,6 +32,7 @@ export const tasksModel = {
             name: dataRaw.name,
             description: dataRaw.description,
             isDone: dataRaw.is_done,
+            priority: dataRaw.priority,
         };
     },
 };

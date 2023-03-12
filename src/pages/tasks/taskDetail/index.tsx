@@ -7,7 +7,7 @@ import { ITask } from '../../../models/tasks';
 import { AppDispatch } from '../../../store';
 import { fetchCreateTask, fetchUpdateTask } from '../../../store/actions/appState';
 import { selectTaskDetail } from '../../../store/selectors/appState';
-import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName } from '../../../store/slices/appState';
+import { setTaskDesc, setTaskDetail, setTaskIsDone, setTaskName, setTaskPriority } from '../../../store/slices/appState';
 import { ID_DESC_INPUT, ID_NAME_INPUT } from '../../../utils/constans';
 import styles from './styles.module.scss';
 
@@ -49,6 +49,13 @@ export const TaskDetail = () => {
         dispatch(setTaskIsDone(event.target.checked));
     };
 
+    const handleChangePriority = () => {
+        if (!data || !data.id) {
+            return;
+        }
+        dispatch(setTaskPriority(data.priority));
+    };
+
 
     if (!data) {
         return null;
@@ -77,6 +84,26 @@ export const TaskDetail = () => {
                     className={styles.desc}
                     value={data.description}
                     onChange={handleChangeDesc}/>
+                <div className="RadioButtons">
+                    <RadioButton
+                        id={"hight"}
+                        checked={data.priority == "hight" ? true : false}
+                        onChange={handleChangePriority}>
+                            Высокий
+                    </RadioButton>
+                    <RadioButton
+                        id={"medium"}
+                        checked={data.priority == "medium" ? true : false}
+                        onChange={handleChangePriority}>
+                            Средний
+                    </RadioButton>
+                    <RadioButton
+                        id={"low"}
+                        checked={data.priority == "low" ? true : false}
+                        onChange={handleChangePriority}>
+                            Никзкий
+                    </RadioButton>
+                </div>
                 <CheckBox
                     isDisabled={!data.id}
                     isChecked={data.isDone}

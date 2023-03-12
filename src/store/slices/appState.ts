@@ -57,7 +57,24 @@ const appStateSlice = createSlice({
                 return;
             }
             state.taskDetail.isDone = action.payload;
-        }
+        },
+        setTaskPriority: (state, action: PayloadAction<string>) => {
+            if (!state.taskDetail) {
+                return;
+            }
+            if (action.payload == "low") {
+                state.taskDetail.priority = "low";
+                state.taskDetail.name += " / Низкий приоритет"
+            }
+            if (action.payload == "medium") {
+                state.taskDetail.priority = "medium";
+                state.taskDetail.name += " / Средний приоритет"
+            }
+            if (action.payload == "hight") {
+                state.taskDetail.priority = "hight";
+                state.taskDetail.name += " / Высокий приоритет"
+            }
+        },
     },
 });
 
@@ -70,6 +87,7 @@ export const {
     setTaskName,
     setTaskDesc,
     setTaskIsDone,
+    setTaskPriority,
     updateTask,
 } = appStateSlice.actions;
 
